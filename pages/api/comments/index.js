@@ -1,9 +1,13 @@
 import { comments } from "@/data/comments";
 
 export default function Handler(req, res) {
-  console.log("/api/comments/" + req.method);
-  if (req.method === "GET") res.status(200).json(comments);
-  else if (req.method === "POST") {
+  console.log("/api/comments/" + req.method, req.body.params);
+  // if (req.method === "GET") {
+  //   // const params = req.query.params;
+  //   // console.log("GET" + "params", params);
+  //   // res.status(200).json(comments);
+  // } else
+  if (req.method === "POST") {
     const comment = req.body.comment;
     console.log("req.body", req.body);
     if (comment) {
