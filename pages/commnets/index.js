@@ -36,6 +36,23 @@ const Comments = () => {
     }
     // setComments(data);
   };
+  const deleteComments = async (id) => {
+    const res = await fetch("/api/comments/" + id, {
+      method: "delete",
+      // body: JSON.stringify({ comment: formData.comment }),
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
+    });
+    const data = await res.json();
+    console.log(data);
+    if (data.status) {
+      // setData({ comment: "" });
+      setData({ comment: "" });
+      getComments();
+    }
+    // setComments(data);
+  };
   return (
     <>
       <h1>Comments</h1>
@@ -47,11 +64,21 @@ const Comments = () => {
         onChange={inputHander}
         value={formData.comment}
         name="comment"
+        onKeyPress={(event) => {
+          if (event.key === "Enter") {
+            sendComments();
+          }
+        }}
       />
       <button onClick={sendComments}>Send</button>
       <ul>
         {commentsList.map((c) => {
-          return <li key={c.id}>{c.text}</li>;
+          return (
+            <>
+              <li key={c.id}>{c.text}</li>
+              <button onClick={() => deleteComments(c.id)}>delete</button>
+            </>
+          );
         })}
       </ul>
     </>
